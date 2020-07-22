@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+  apachessl:
+    build: apache
+    ports:
+      - "${APP_PORT}:80"
+      - "443:443"
+    volumes:
+      - tmp-volume:/tmp
+      - ${APPLICATION_DIR}:/var/www/html
+      - ${APPLICATION_DIR}/vendor:/var/www/html/vendor:cached
+    networks:
+      - sslocal
+  php:
+    image: firsttable/php
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+      args:
+        - APP_ENV=${APP_ENV}
+    volumes:
+      - tmp-volume:/tmp
+      - ${APPLICATION_DIR}:/var/www/html
+      - ${APPLICATION_DIR}/vendor:/var/www/html/vendor:cached
+    networks:
+      - sslocal
+  mysql57:
+    image: mysql:5.7
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_USER: ${MYSQL_ROOT_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - sdb-volume:/var/lib/mysql
+    networks:
+      - sslocal
+  webgrind:
+    image: wodby/webgrind:latest
+    ports:
+      - "8888:8080"
+    volumes:
+      - tmp-volume:/tmp
+    networks:
+      - sslocal
+  maildev:
+    image: djfarrelly/maildev
+    ports:
+      - "8082:80"
+    networks:
+      - sslocal
+networks:
+  sslocal:
+    driver: "bridge"
+volumes:
+  ssdb-volume:
+    driver: "local"
+  tmp-volume:
+    driver: "local"
