@@ -1,4 +1,5 @@
-FROM php:7.3-fpm
+ARG TARGET_PHP_VERSION
+FROM php:${TARGET_PHP_VERSION}-fpm
 
 ENV DEBIAN_FRONTEND=noninteractive
 # is for production or development
