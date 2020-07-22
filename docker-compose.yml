@@ -26,8 +26,13 @@ services:
       - ${APP_PATH}/vendor:/var/www/current/vendor:cached
     networks:
       - sslocal
-  mysql57:
-    image: mysql:5.7
+  mysql:
+    image: silverstripe/mysql
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
     ports:
       - "${DB_PORT}:3306"
     environment:

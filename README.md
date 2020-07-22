@@ -84,4 +84,10 @@ Handy for profiling. Uncomment the following in the `docker-compose` file.
 
 # Composer and installing packages
 
+An example of creating a project
+
 `docker-compose exec -T --user www-data php composer create-project silverstripe/installer /var/www/current`
+
+Example of a command for installing a package
+
+`docker-compose exec -T --user www-data php composer require --dev lekoala/silverstripe-debugbar`
