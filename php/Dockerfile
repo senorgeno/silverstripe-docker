@@ -42,11 +42,17 @@ RUN /tmp/scripts/modify_config.sh /usr/local/etc/php-fpm.d/zz-app.conf \
     "${APP_GROUP}" \
 ;
 
+# install composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+USER ${APP_USER}
+RUN composer global require hirak/prestissimo
+USER root
+
 # install all scripts
 RUN /tmp/scripts/install_php_extensions.sh
 
 # workdir
-ARG APP_CODE_PATH="/var/www/html"
+ARG APP_CODE_PATH="/var/www/current"
 WORKDIR "$APP_CODE_PATH"
 VOLUME "$APP_CODE_PATH"
 

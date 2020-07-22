@@ -82,6 +82,6 @@ Handy for profiling. Uncomment the following in the `docker-compose` file.
 ```
 
 
-# TODO
+# Composer and installing packages
 
-- composer and instructions how to install into docker.
+`docker-compose exec -T --user www-data php composer create-project silverstripe/installer /var/www/current`
