@@ -12,7 +12,7 @@ services:
     networks:
       - sslocal
   php:
-    image: firsttable/php
+    image: silverstripe/php
     build:
       context: .
       dockerfile: ./php/Dockerfile
@@ -35,7 +35,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - sdb-volume:/var/lib/mysql
+      - ssdb:/var/lib/mysql
     networks:
       - sslocal
   webgrind:
@@ -56,7 +56,7 @@ networks:
   sslocal:
     driver: "bridge"
 volumes:
-  ssdb-volume:
+  ssdb:
     driver: "local"
   tmp-volume:
     driver: "local"

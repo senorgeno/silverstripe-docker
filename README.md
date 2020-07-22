@@ -1,7 +1,11 @@
 # LAMP Stack for Development of First Table
 
 # PHP
-TODO
+## TODO 
+- configurable php version
+- configurable production and development ini settings 
+- override php settings e.g. memory
+- configure fpm settings
 
 ## Apache
 This comes with server cert and key for my.local and *.my.local domains.
@@ -33,8 +37,8 @@ ST = Queenstown
 L = Queenstown
 O = MyDomain Inc.
 OU = Technology Group
-emailAddress = me@me.com
-CN = me.local
+emailAddress = me@mycom
+CN = my.local
 
 [v3_req]
 subjectAltName = @alt_names
@@ -77,3 +81,7 @@ Handy for profiling. Uncomment the following in the `docker-compose` file.
 #      - ftlocal
 ```
 
+
+# TODO
+
+- composer and instructions how to install into docker.
