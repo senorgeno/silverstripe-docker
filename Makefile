@@ -1,3 +1,4 @@
+
 # see https://tech.davis-hansson.com/p/make/
 SHELL := bash
 .ONESHELL:
@@ -86,6 +87,10 @@ docker-config: docker-init ## Show the docker-compose config with resolved .env 
 docker-exec-php: ## Exec into the PHP container
 	docker exec -it $$(docker ps --format {{.ID}} --filter name=php) bash
 
+.PHONY: docker-logs
+docker-logs: ## Tail all containers
+	$(DOCKER_COMPOSE) logs -f
+
 ##@ [Application]
 
 .PHONY: composer
@@ -95,3 +100,19 @@ composer: ## Run composer and provide the command via ARGS="command --options"
 .PHONY: composer-install
 composer-install: ## Run composer install
 	$(RUN_IN_DOCKER) composer install
+
+.PHONY: run-test
+run-test: ## Run tests inside PHP and provide the command via ARGS="./app/tests/GraphQL/UpdateBookingMutationTest.php"
+	$(RUN_IN_DOCKER) ./vendor/bin/phpunit $(ARGS)
+
+.PHONY: run-flush
+run-flush: ## Run flush=1 via cli"
+	$(RUN_IN_DOCKER) ./vendor/bin/sake dev/tasks flush=1
+
+.PHONY: run-build
+run-build: ## Run /dev/build via cli"
+	$(RUN_IN_DOCKER) ./vendor/bin/sake dev/build flush=1
+
+.PHONY: run-dev-task
+run-dev-task: ## Run /dev/build via ARGS="dev/tasks/GenerateAvailability"
+	$(RUN_IN_DOCKER) vendor/bin/sake $(ARGS)
