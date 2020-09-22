@@ -86,7 +86,9 @@ Handy for profiling. Uncomment the following in the `docker-compose` file.
 
 An example of creating a project
 
-`docker-compose exec -T --user www-data php composer create-project silverstripe/installer /var/www/current`
+`docker-compose exec -T --user www-data php composer create-project silverstripe/installer /var/www/html/new`
+
+This will create the project in the new directory. You will need to create in her and then move the installation to `/var/www/html`.
 
 Example of a command for installing a package
 
