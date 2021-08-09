@@ -112,7 +112,3 @@ run-flush: ## Run flush=1 via cli"
 .PHONY: run-build
 run-build: ## Run /dev/build via cli"
 	$(RUN_IN_DOCKER) ./vendor/bin/sake dev/build flush=1
-
-.PHONY: run-dev-task
-run-dev-task: ## Run /dev/build via ARGS="dev/tasks/GenerateAvailability"
-	$(RUN_IN_DOCKER) vendor/bin/sake $(ARGS)
